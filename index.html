@@ -1,0 +1,161 @@
+<!doctype html><html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lucid</title>
+<style>
+:root{color-scheme:dark;--bg:#000;--ink:#fff;--sub:#9a9a9a;--line:#333;--acc:#fff;--on:#000;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;font-weight:300;line-height:1.7}
+main{max-width:720px;margin:0 auto;padding:0 22px 64px}
+.hero{padding:72px 0 48px}
+.name{margin:0;font-size:clamp(56px,20vw,140px);line-height:1;font-weight:200;letter-spacing:.08em}
+.name span{display:block}
+.name span+span{color:transparent;-webkit-text-stroke:1px var(--acc)}
+.tag{margin:24px 0 0;color:var(--sub);font-size:18px}
+h2{font-size:20px;font-weight:300;letter-spacing:.08em;margin:56px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--ink)}
+h3{font-size:16px;font-weight:400;margin:24px 0 6px;color:var(--acc)}
+p{margin:0;max-width:60ch}
+.row{display:grid;grid-template-columns:72px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.row b{color:var(--acc);font-weight:400}
+.who{display:flex;flex-wrap:wrap;gap:6px 22px}
+.who span{white-space:nowrap}
+small{color:var(--sub);font-size:13px;margin-left:4px}
+.old{color:var(--sub)}
+.old .who{gap:4px 16px}
+.show{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.show time{min-width:104px;font-weight:400}
+.show small{display:block;margin:0}
+a.btn{display:inline-block;margin-top:8px;padding:12px 20px;background:var(--acc);color:var(--on);text-decoration:none;font-weight:400;border-radius:4px}
+a.btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+footer{margin-top:56px;color:var(--sub);font-size:14px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:1;display:flex;gap:4px;background:var(--bg);border-bottom:1px solid var(--line)}
+nav a{padding:14px 16px;color:var(--sub);text-decoration:none;font-weight:400;letter-spacing:.12em;border-bottom:1px solid transparent}
+nav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--acc)}
+nav a:focus-visible{outline:3px solid var(--acc);outline-offset:-3px}
+[hidden]{display:none!important}
+.seg{display:flex;gap:8px;margin-top:24px}
+.seg a{padding:8px 14px;border:1px solid var(--line);border-radius:20px;color:var(--sub);text-decoration:none;font-weight:400;font-size:15px}
+.seg a[aria-current="page"]{background:var(--acc);border-color:var(--acc);color:var(--on)}
+.seg a:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.bd{display:flex;gap:16px;padding:8px 0;border-bottom:1px solid var(--line)}
+.bd time{min-width:56px;font-weight:400}
+.del{margin-left:auto;background:none;border:1px solid var(--line);color:var(--sub);border-radius:4px;padding:2px 10px;font:inherit;font-size:13px;cursor:pointer}
+.frm{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.frm input,.frm select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink);min-width:0}
+.frm input[type=number]{width:72px}
+.frm input:not([type]){flex:1;min-width:140px}
+.add{font:inherit;font-weight:400;padding:8px 16px;border:0;border-radius:4px;background:var(--acc);color:var(--on);cursor:pointer}
+.empty{color:var(--sub)}
+.who .del{margin-left:6px;padding:0 8px;font-size:12px}
+#intro{position:fixed;inset:0;z-index:100;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;transition:opacity .5s;cursor:pointer}
+#intro.out{opacity:0;pointer-events:none}
+#intro .w{font-size:clamp(56px,17vw,130px);font-weight:200;letter-spacing:.3em;margin-right:-.3em;line-height:1;animation:lu 1.2s ease both}
+#intro p{margin:20px auto 0;font-size:12px;letter-spacing:.2em;color:#9a9a9a;animation:lu 1.2s .6s ease both}
+@keyframes lu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){#intro .w,#intro p{animation:none}#intro{transition:none}}
+</style>
+</head>
+<body>
+<script>
+(function(){var h=location.hash,seen=false;try{seen=sessionStorage.getItem('lucid-intro')}catch(e){}
+if(seen||(h&&h!=='#home'))return;
+var d=document.createElement('div');d.id='intro';d.setAttribute('role','button');d.tabIndex=0;d.setAttribute('aria-label','Lucid 입장');
+d.innerHTML='<div class="in"><div class="w">LUCID</div><p>CLICK, TOUCH OR SCROLL TO SKIP</p></div>';
+document.body.appendChild(d);document.documentElement.style.overflow='hidden';
+var done=false;function go(){if(done)return;done=true;try{sessionStorage.setItem('lucid-intro','1')}catch(e){}d.classList.add('out');setTimeout(function(){d.remove();document.documentElement.style.overflow=''},500)}
+['click','touchstart','touchmove','wheel','keydown'].forEach(function(t){window.addEventListener(t,go,{passive:true})});setTimeout(go,3800)})();
+</script>
+<main>
+<nav aria-label="메뉴"><a href="#home" id="t-home" aria-current="page">홈</a><a href="#schedule" id="t-sch">일정</a><a href="#score" id="t-score">악보</a></nav>
+<div id="v-home">
+<header class="hero">
+<h1 class="name"><span>Lucid</span><span>Lucid</span></h1>
+<p class="tag">루시드 영원하자 루영</p>
+</header>
+
+<section><div id="r-mem" data-render=""></div></section>
+
+
+
+
+
+</div>
+<div id="v-schedule" hidden="">
+<div class="seg"><a href="#schedule" aria-current="page">공연 일정</a><a href="#birthday">생일 일정</a></div>
+<h2 style="margin-top:24px">공연 일정</h2>
+<div id="r-shows" data-render=""></div></div>
+<div id="v-birthday" hidden="">
+<div class="seg"><a href="#schedule">공연 일정</a><a href="#birthday" aria-current="page">생일 일정</a></div>
+<h2 style="margin-top:24px">생일 일정</h2>
+<div id="r-bday" data-render=""></div></div>
+<div id="v-score" hidden="">
+<h2 style="margin-top:32px">악보</h2>
+<p>합주할 때 쓰는 악보 모음이에요.</p>
+<a class="btn" href="https://paper-stage-ebf.notion.site/3d77b47960aa8066b831e7e3586580d5?v=bb87b47960aa82cfbc540859760d4114&amp;source=copy_link" target="_blank" rel="noopener">악보 보러 가기</a>
+</div>
+<footer>© Lucid</footer>
+</main>
+<script>
+(function(){var v={home:'t-home',schedule:'t-sch',birthday:'t-sch',score:'t-score'};
+function r(){var k=v[location.hash.slice(1)]?location.hash.slice(1):'home';
+for(var n in v){document.getElementById('v-'+n).hidden=n!==k;}
+['t-home','t-sch','t-score'].forEach(function(t){var e=document.getElementById(t);if(t===v[k])e.setAttribute('aria-current','page');else e.removeAttribute('aria-current');});
+window.scrollTo(0,0);}
+window.addEventListener('hashchange',r);r();})();
+</script>
+<script type="application/json" id="state">{"shows":[{"d":"2026-11-07","n":"B612 Band night"},{"d":"2026-09-15","n":"2026 광주보건대 서원축전"},{"d":"2026-08-22","n":"Band of bands 기획공연"},{"d":"2025-12-20","n":"기획공연 Never Ending"},{"d":"2025-09-16","n":"2025 광주보건대 서원축전"},{"d":"2025-03-04","n":"2025 광주보건대 신입생OT 축하공연"},{"d":"2024-09-25","n":"2024 광주보건대 서원축전"},{"d":"2024-03-04","n":"2024 광주보건대 신입생OT 축하공연"}],"bdays":[{"m":1,"d":7,"n":"정주혁"},{"m":1,"d":11,"n":"조성윤"},{"m":1,"d":20,"n":"정동혁"},{"m":1,"d":26,"n":"조현규"},{"m":2,"d":9,"n":"박현빈"},{"m":2,"d":27,"n":"정석진"},{"m":3,"d":10,"n":"양축복"},{"m":3,"d":16,"n":"송혜리"},{"m":3,"d":27,"n":"박은희"},{"m":4,"d":18,"n":"곽조은"},{"m":5,"d":20,"n":"신미교"},{"m":5,"d":28,"n":"조경섭"},{"m":6,"d":1,"n":"김새봄"},{"m":6,"d":13,"n":"임수빈"},{"m":6,"d":19,"n":"박경민"},{"m":7,"d":13,"n":"정석훈"},{"m":7,"d":15,"n":"이영준"},{"m":9,"d":2,"n":"박한기"},{"m":9,"d":4,"n":"이하은"},{"m":9,"d":10,"n":"박남준"},{"m":9,"d":12,"n":"김범준"},{"m":9,"d":16,"n":"이예준"},{"m":9,"d":20,"n":"기장선"},{"m":9,"d":25,"n":"노대영"},{"m":9,"d":29,"n":"오수종"},{"m":10,"d":7,"n":"홍소은"},{"m":10,"d":19,"n":"박성윤"},{"m":10,"d":27,"n":"유민서"},{"m":11,"d":5,"n":"이후빈"},{"m":11,"d":5,"n":"안아민"},{"m":11,"d":9,"n":"유가현"},{"m":11,"d":18,"n":"최진영"},{"m":12,"d":7,"n":"현보근"},{"m":12,"d":12,"n":"김성민"},{"m":12,"d":14,"n":"유현영"},{"m":12,"d":18,"n":"백예나"},{"m":12,"d":19,"n":"배소윤"},{"m":12,"d":20,"n":"주영빈"},{"m":12,"d":27,"n":"김연희"},{"m":1,"d":30,"n":"정재윤"}],"members":[{"n":"배소윤","g":1,"p":"V","t":"간호20","a":1},{"n":"홍소은","g":4,"p":"V","t":"사복26","a":1},{"n":"정재윤","g":3,"p":"P","t":"보행21","a":1},{"n":"백예나","g":4,"p":"P","t":"사복26","a":1},{"n":"노대영","g":2,"p":"G","t":"물치24","a":1},{"n":"박현빈","g":4,"p":"G","t":"","a":1},{"n":"이영준","g":4,"p":"G","t":"스의26","a":1},{"n":"김연희","g":1,"p":"D","t":"치위22","a":1},{"n":"이하은","g":4,"p":"D","t":"방사26","a":1},{"n":"주영빈","g":2,"p":"B","t":"","a":1},{"n":"이후빈","g":3,"p":"B","t":"물치21","a":1},{"n":"기장선","g":4,"p":"B","t":"","a":1},{"n":"유현영","g":1,"p":"P","t":"간호23","a":0},{"n":"윤세경","g":1,"p":"V","t":"간호23","a":0},{"n":"조경섭","g":1,"p":"D","t":"","a":0},{"n":"박한기","g":1,"p":"G","t":"","a":0},{"n":"오수종","g":1,"p":"G","t":"간호21","a":0},{"n":"조현규","g":2,"p":"V","t":"","a":0},{"n":"박경민","g":2,"p":"D","t":"물치20","a":0},{"n":"신미교","g":2,"p":"G","t":"간호23","a":0},{"n":"안아민","g":2,"p":"B","t":"물치23","a":0},{"n":"현보근","g":2,"p":"V","t":"응구24","a":0},{"n":"양축복","g":2,"p":"D","t":"","a":0},{"n":"정석훈","g":2,"p":"B","t":"","a":0},{"n":"최진영","g":2,"p":"V","t":"물치24","a":0},{"n":"유가현","g":2,"p":"P","t":"간호24","a":0},{"n":"곽조은","g":2,"p":"V","t":"식영24","a":0},{"n":"권형민","g":3,"p":"G","t":"응구24","a":0},{"n":"박은희","g":3,"p":"P","t":"간호25","a":0},{"n":"송혜리","g":3,"p":"V","t":"방사25","a":0},{"n":"박예림","g":3,"p":"V","t":"안광25","a":0},{"n":"박범준","g":3,"p":"G","t":"간호25","a":0},{"n":"정동혁","g":3,"p":"G","t":"","a":0},{"n":"김성민","g":3,"p":"P","t":"간호25","a":0},{"n":"유민서","g":3,"p":"V","t":"","a":0},{"n":"박성윤","g":3,"p":"D","t":"","a":0},{"n":"임수빈","g":3,"p":"B","t":"물치25","a":0},{"n":"정석진","g":3,"p":"G","t":"물치25","a":0},{"n":"김새봄","g":3,"p":"B","t":"간호25","a":0},{"n":"박남준","g":3,"p":"V","t":"방사23","a":0},{"n":"조성윤","g":3,"p":"D","t":"방사25","a":0},{"n":"이예준","g":4,"p":"G","t":"","a":0},{"n":"정주혁","g":4,"p":"V","t":"스의26","a":0},{"n":"김범준","g":4,"p":"G","t":"","a":0}]}</script>
+<script>
+(async function(){
+var $=function(i){return document.getElementById(i)},sv=$('v-schedule'),bv=$('v-birthday'),S,ed=false,A=null,tm=null;
+function fromDom(){var s={shows:[],bdays:[]},m=0;
+sv.querySelectorAll('.show').forEach(function(e){s.shows.push({d:e.querySelector('time').textContent.trim().replace(/\./g,'-'),n:e.children[1].textContent.trim()})});
+Array.prototype.forEach.call(bv.children,function(e){if(e.tagName==='H3')m=parseInt(e.textContent);else if(e.classList.contains('bd'))s.bdays.push({m:m,d:parseInt(e.querySelector('time').textContent),n:e.lastChild.textContent.trim()})});
+return s}
+var raw=$('state').textContent.trim();S=raw?JSON.parse(raw):fromDom();
+function wipe(v,id){while(v.children.length>2)v.removeChild(v.lastChild);var d=document.createElement('div');d.id=id;d.setAttribute('data-render','');v.appendChild(d);return d}
+var rs=wipe(sv,'r-shows'),rb=wipe(bv,'r-bday');
+var ms=document.querySelector('#v-home section');
+function pm(){var L=[],P={'보컬':'V','건반':'P','피아노':'P','기타':'G','드럼':'D','베이스':'B'};
+ms.querySelectorAll('.row').forEach(function(r){var p=P[r.querySelector('b').textContent.trim()];r.querySelectorAll('.who span').forEach(function(s){var sm=s.querySelector('small').textContent.split(' · ');L.push({n:s.firstChild.textContent.trim(),g:parseInt(sm[0]),p:p,t:sm[1]||'',a:1})})});
+var g=0;ms.querySelectorAll('.old').forEach(function(o){Array.prototype.forEach.call(o.children,function(e){if(e.tagName==='H3')g=parseInt(e.textContent);else e.querySelectorAll('span').forEach(function(s){var sm=s.querySelector('small').textContent.split(' · ');L.push({n:s.firstChild.textContent.trim(),g:g,p:sm[0],t:sm[1]||'',a:0})})})});return L}
+if(!S.members)S.members=pm();
+ms.innerHTML='';var rm=document.createElement('div');rm.id='r-mem';rm.setAttribute('data-render','');ms.appendChild(rm);
+var PN=[['V','보컬'],['P','건반'],['G','기타'],['D','드럼'],['B','베이스']];
+function mb(i,on){return ed?`<button class='del' data-k='m' data-i='${i}' data-a='${on?'off':'on'}'>${on?'이전 멤버로':'현재 멤버로'}</button><button class='del' data-k='m' data-i='${i}' data-a='x'>삭제</button>`:''}
+function mem(){var h='<h2>멤버</h2>';
+PN.forEach(function(q){var l=[];S.members.forEach(function(x,i){if(x.a&&x.p===q[0])l.push([x,i])});if(!l.length)return;l.sort(function(a,b){return a[0].g-b[0].g});
+h+=`<div class='row'><b>${q[1]}</b><div class='who'>`+l.map(function(p){var x=p[0];return `<span>${esc(x.n)}<small>${x.g}기${x.t?' · '+esc(x.t):''}</small>${mb(p[1],1)}</span>`}).join('')+'</div></div>'});
+var gs={};S.members.forEach(function(x,i){if(!x.a)(gs[x.g]=gs[x.g]||[]).push([x,i])});
+var ks=Object.keys(gs).sort(function(a,b){return a-b});
+if(ks.length)h+=`<h2>명예멤버</h2><p>Lucid를 거쳐 간 이전 멤버들이에요.</p><div class='old'>`+ks.map(function(k){return `<h3>${k}기</h3><div class='who'>`+gs[k].map(function(p){var x=p[0];return `<span>${esc(x.n)}<small>${esc(x.p)}${x.t?' · '+esc(x.t):''}</small>${mb(p[1],0)}</span>`}).join('')+'</div>'}).join('')+'</div>';
+if(ed)h+=`<div class='frm'><input id='f-mn' placeholder='이름'><input type='number' id='f-mg' min='1' placeholder='기수'><select id='f-mp'>${PN.map(function(q){return `<option value='${q[0]}'>${q[1]}</option>`}).join('')}</select><input id='f-mt' placeholder='학과·학번 (선택)'><button class='add' data-k='m'>멤버 추가</button></div>`;
+rm.innerHTML=h}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return '&#'+c.charCodeAt(0)+';'})}
+function today(){var n=new Date(),p=function(x){return ('0'+x).slice(-2)};return n.getFullYear()+'-'+p(n.getMonth()+1)+'-'+p(n.getDate())}
+function del(k,i){return ed?`<button class='del' data-k='${k}' data-i='${i}'>삭제</button>`:''}
+function show(p){return `<div class='show'><time>${p[0].d.replace(/-/g,'.')}</time><div>${esc(p[0].n)}</div>${del('s',p[1])}</div>`}
+function render(){mem();var t=today(),up=[],pa=[];
+S.shows.forEach(function(x,i){(x.d>=t?up:pa).push([x,i])});
+up.sort(function(a,b){return a[0].d<b[0].d?-1:1});pa.sort(function(a,b){return a[0].d<b[0].d?1:-1});
+rs.innerHTML='<h3>다가오는 공연</h3>'+(up.length?up.map(show).join(''):`<p class='empty'>예정된 공연이 아직 없어요.</p>`)+'<h3>지난 공연</h3>'+pa.map(show).join('')+(ed?`<div class='frm'><input type='date' id='f-sd' aria-label='날짜'><input id='f-sn' placeholder='공연 이름'><button class='add' data-k='s'>추가</button></div>`:'');
+var h='';for(var m=1;m<=12;m++){var l=[];S.bdays.forEach(function(x,i){if(x.m===m)l.push([x,i])});if(!l.length)continue;l.sort(function(a,b){return a[0].d-b[0].d});h+=`<h3>${m}월</h3>`+l.map(function(p){return `<div class='bd'><time>${p[0].d}일</time>${esc(p[0].n)}${del('b',p[1])}</div>`}).join('')}
+rb.innerHTML=h+(ed?`<div class='frm'><input type='number' id='f-bm' min='1' max='12' placeholder='월'><input type='number' id='f-bd' min='1' max='31' placeholder='일'><input id='f-bn' placeholder='이름'><button class='add' data-k='b'>추가</button></div><p id='st' class='empty'></p>`:'')}
+render();
+try{var c0=window.claude&&await claude.use('artifact'),u0=window.claude&&await claude.use('user');A=c0;ed=!!(c0&&u0&&u0.canEdit&&u0.canEdit())}catch(e){}
+if(ed)render();
+function v(i){return $(i).value}
+function save(){render();clearTimeout(tm);tm=setTimeout(async function(){try{var c=document.documentElement.cloneNode(true);c.querySelector('#state').textContent=JSON.stringify(S).replace(/</g,String.fromCharCode(92)+'u003c');c.querySelectorAll('[data-render]').forEach(function(e){e.innerHTML=''});var iv=c.querySelector('#intro');if(iv)iv.remove();c.style.removeProperty('overflow');await A.publish('<!doctype html>'+c.outerHTML)}catch(e){var s=$('st');if(s)s.textContent='저장하지 못했어요. 새로고침한 뒤 다시 해 주세요.'}},800)}
+document.addEventListener('click',function(e){var b=e.target.closest('button[data-k]');if(!b||!ed)return;var k=b.dataset.k;
+if(k==='m'&&b.dataset.a){var mi=+b.dataset.i,a=b.dataset.a;if(a==='x')S.members.splice(mi,1);else S.members[mi].a=a==='on'?1:0}
+else if(k==='m'){var mn=v('f-mn').trim(),mg=+v('f-mg');if(!mn||!(mg>=1))return;S.members.push({n:mn,g:mg,p:v('f-mp'),t:v('f-mt').trim(),a:1})}
+else if(b.classList.contains('del')){(k==='s'?S.shows:S.bdays).splice(+b.dataset.i,1)}
+else if(k==='s'){var d=v('f-sd'),n=v('f-sn').trim();if(!d||!n)return;S.shows.push({d:d,n:n})}
+else{var m=+v('f-bm'),dd=+v('f-bd'),nn=v('f-bn').trim();if(!(m>=1&&m<=12&&dd>=1&&dd<=31&&nn))return;S.bdays.push({m:m,d:dd,n:nn})}
+save()});
+})();
+</script>
+
+
+</body></html>
